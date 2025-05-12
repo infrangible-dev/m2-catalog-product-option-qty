@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!--
+ * @author      Andreas Knollmann
+ * @copyright   2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Block\Product\View\Options\Type\Select">
+        <plugin name="infrangible_catalogproductoptionqty" type="Infrangible\CatalogProductOptionQty\Plugin\Catalog\Block\Product\View\Options\Type\Select"/>
+    </type>
+    <type name="Magento\Framework\View\Element\Html\Select">
+        <plugin name="infrangible_catalogproductoptionqty" type="Infrangible\CatalogProductOptionQty\Plugin\Framework\View\Element\Html\Select"/>
+    </type>
+</config>

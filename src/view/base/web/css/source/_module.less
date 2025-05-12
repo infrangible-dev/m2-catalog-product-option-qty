@@ -1,0 +1,60 @@
+/**
+ * @author      Andreas Knollmann
+ * @copyright   Copyright (c) 2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+ */
+
+& when (@media-common = true) {
+    #product-options-wrapper {
+        .fieldset {
+            .field {
+                .field.qty {
+                    display: table;
+                    margin-bottom: 5px;
+
+                    label {
+                        display: table-cell;
+
+                        span {
+                            margin-right: 5px;
+                        }
+                    }
+
+                    > .control {
+                        display: table-cell;
+                        width: 54px;
+
+                        > .product-option-qty {
+                            text-align: center;
+                            height: 24px;
+                            padding: 0;
+                        }
+
+                        select.product-option-qty {
+                            width: 100px;
+                            padding-right: 20px;
+                        }
+                    }
+                }
+
+                > .product-option-qty-price {
+                    margin-top: 5px;
+
+                    label {
+                        margin-right: 5px;
+
+                        &:after {
+                            content: ':';
+                        }
+                    }
+
+                    span.price {
+                        &:before {
+                            content: '+ ';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
