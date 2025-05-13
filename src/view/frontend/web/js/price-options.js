@@ -115,7 +115,7 @@ define([
                 priceField.append(priceFieldLabel);
 
                 var priceFieldPriceContainer = $('<span>', {
-                    class: 'price-container price-final_price'
+                    class: 'price-container price-option_price'
                 });
                 priceField.append(priceFieldPriceContainer);
 
