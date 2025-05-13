@@ -80,6 +80,10 @@ define([
                                 $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                             });
                         }
+
+                        control.find('select.product-custom-option, input.product-custom-option').each(function() {
+                            $(this).attr('data-role', 'qty');
+                        });
                     }
                 });
             });
