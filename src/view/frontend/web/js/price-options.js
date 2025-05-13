@@ -108,7 +108,7 @@ define([
             var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
             if (control.length > 0) {
                 var priceField = $('<div>', {class: 'product-option-qty-price'});
-                control.after(priceField);
+                control.append(priceField);
 
                 var priceFieldLabel = $('<label>', {class: 'label'});
                 priceFieldLabel.html($.mage.__('Your selection'));

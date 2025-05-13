@@ -8,49 +8,51 @@
     #product-options-wrapper {
         .fieldset {
             .field {
-                .field.qty {
-                    display: table;
-                    margin-bottom: 5px;
+                > .control {
+                    .field.qty {
+                        display: table;
+                        margin-bottom: 5px;
 
-                    label {
-                        display: table-cell;
+                        label {
+                            display: table-cell;
 
-                        span {
+                            span {
+                                margin-right: 5px;
+                            }
+                        }
+
+                        > .control {
+                            display: table-cell;
+                            width: 54px;
+
+                            > .product-option-qty {
+                                text-align: center;
+                                height: 24px;
+                                padding: 0;
+                            }
+
+                            select.product-option-qty {
+                                width: 100px;
+                                padding-right: 20px;
+                            }
+                        }
+                    }
+
+                    > .product-option-qty-price {
+                        margin-top: 5px;
+
+                        label {
                             margin-right: 5px;
-                        }
-                    }
 
-                    > .control {
-                        display: table-cell;
-                        width: 54px;
-
-                        > .product-option-qty {
-                            text-align: center;
-                            height: 24px;
-                            padding: 0;
+                            &:after {
+                                content: ':';
+                            }
                         }
 
-                        select.product-option-qty {
-                            width: 100px;
-                            padding-right: 20px;
-                        }
-                    }
-                }
-
-                > .product-option-qty-price {
-                    margin-top: 5px;
-
-                    label {
-                        margin-right: 5px;
-
-                        &:after {
-                            content: ':';
-                        }
-                    }
-
-                    span.price {
-                        &:before {
-                            content: '+ ';
+                        span.price {
+                            &:before {
+                                content: '+ ';
+                            }
                         }
                     }
                 }

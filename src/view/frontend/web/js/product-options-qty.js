@@ -30,7 +30,7 @@ define([
 
                     if (control.length > 0) {
                         var qtyField = $('<div>', {class: 'field qty'});
-                        control.before(qtyField);
+                        control.prepend(qtyField);
 
                         var label = $('<label>', {class: 'label', for: 'qty'});
                         qtyField.append(label);
