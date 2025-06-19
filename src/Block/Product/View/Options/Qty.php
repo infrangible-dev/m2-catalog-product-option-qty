@@ -89,6 +89,8 @@ class Qty extends Template
                 } else {
                     $config[ $option->getId() ][ 'input' ] = 1;
                 }
+
+                $config[ $option->getId() ][ 'sync' ] = $option->getData('qty_sync') == 1;
             }
         }
 

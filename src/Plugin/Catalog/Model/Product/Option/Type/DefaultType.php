@@ -30,4 +30,26 @@ class DefaultType
 
         return $result;
     }
+
+    public function afterGetFormattedOptionValue(
+        \Magento\Catalog\Model\Product\Option\Type\DefaultType $subject,
+        string $result
+    ): string {
+        /** @var Option $itemOption */
+        $itemOption = $subject->getData('configuration_item_option');
+
+        if ($itemOption) {
+            $optionQty = $itemOption->getItem()->getOptionByCode($itemOption->getCode() . '_qty');
+
+            if ($optionQty && $optionQty->getValue() > 1) {
+                $result = sprintf(
+                    '%dx %s',
+                    $optionQty->getValue(),
+                    $result
+                );
+            }
+        }
+
+        return $result;
+    }
 }
