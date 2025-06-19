@@ -21,7 +21,9 @@ class DefaultType
         $itemOption = $subject->getData('configuration_item_option');
 
         if ($itemOption) {
-            $optionQty = $itemOption->getItem()->getOptionByCode($itemOption->getCode() . '_qty');
+            $item = $itemOption->getItem();
+
+            $optionQty = $item ? $item->getOptionByCode($itemOption->getCode() . '_qty') : null;
 
             if ($optionQty) {
                 $result *= $optionQty->getValue();
