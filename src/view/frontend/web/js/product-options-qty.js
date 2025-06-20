@@ -67,13 +67,9 @@ define([
 
                             if (qtyData.sync) {
                                 qtyNode.on('input', function() {
-                                    if (qtyInput.data('sync') === true) {
-                                        var qty = $(this).val();
-
-                                        qtyInput.val(qty);
-                                        qtyInput.trigger('sync');
-                                    }
+                                    self.syncQtyInput($(this), qtyInput);
                                 });
+                                self.syncQtyInput(qtyNode, qtyInput);
                             }
                         } else if (qtyData.steps) {
                             var qtySelect = $('<select>', {
@@ -103,17 +99,9 @@ define([
                             });
 
                             if (qtyData.sync) {
+                                self.syncQtySelect(qtyNode, qtySelect);
                                 qtyNode.on('input', function() {
-                                    if (qtySelect.data('sync') === true) {
-                                        var qty = $(this).val();
-
-                                        qtySelect.find('option').each(function() {
-                                            if ($(this).val() === qty) {
-                                                qtySelect.val(qty);
-                                                qtySelect.trigger('change');
-                                            }
-                                        });
-                                    }
+                                    self.syncQtySelect($(this), qtySelect);
                                 });
                             }
                         }
@@ -124,6 +112,28 @@ define([
                    }
                 });
             });
+        },
+
+        syncQtyInput: function(qty, qtyInput) {
+            if (qtyInput.data('sync') === true) {
+                var qtyValue = qty.val();
+
+                qtyInput.val(qtyValue);
+                qtyInput.trigger('sync');
+            }
+        },
+
+        syncQtySelect: function(qty, qtySelect) {
+            if (qtySelect.data('sync') === true) {
+                var qtyValue = qty.val();
+
+                qtySelect.find('option').each(function() {
+                    if ($(this).val() === qtyValue) {
+                        qtySelect.val(qtyValue);
+                        qtySelect.trigger('sync');
+                    }
+                });
+            }
         }
     });
 
