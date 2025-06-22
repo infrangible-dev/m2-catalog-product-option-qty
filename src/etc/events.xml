@@ -9,4 +9,7 @@
     <event name="catalog_product_option_product_price">
         <observer name="infrangible_catalogproductoptionqty" instance="Infrangible\CatalogProductOptionQty\Observer\CatalogProductOptionProductPrice"/>
     </event>
+    <event name="catalog_product_option_product_qty">
+        <observer name="infrangible_catalogproductoptionqty" instance="Infrangible\CatalogProductOptionQty\Observer\CatalogProductOptionProductQty"/>
+    </event>
 </config>
