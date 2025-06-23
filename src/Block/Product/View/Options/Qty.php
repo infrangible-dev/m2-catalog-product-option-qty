@@ -75,7 +75,11 @@ class Qty extends Template
 
                 if ($optionQtySteps) {
                     if (! $option->getIsRequire()) {
-                        $config[ $option->getId() ][ 'steps' ][] = ['value' => 0, 'label' => __('None')];
+                        $qtyNoneText = $option->getData('qty_none_text');
+
+                        $qtyNoneText = $this->variables->isEmpty($qtyNoneText) ? 'None' : $qtyNoneText;
+
+                        $config[ $option->getId() ][ 'steps' ][] = ['value' => 0, 'label' => __($qtyNoneText)];
                     }
 
                     $steps = explode(

@@ -21,6 +21,8 @@ class CustomOptions
 
     public const FIELD_QTY_STEPS_NAME = 'qty_steps';
 
+    public const FIELD_QTY_NONE_TEXT_NAME = 'qty_none_text';
+
     public const FIELD_QTY_SYNC_NAME = 'qty_sync';
 
     /** @var Arrays */
@@ -74,6 +76,24 @@ class CustomOptions
             $this->getQtyStepsFieldConfig(42)
         );
 
+        $meta = $this->arrays->addDeepValue(
+            $meta,
+            [
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::GROUP_CUSTOM_OPTIONS_NAME,
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::GRID_OPTIONS_NAME,
+                'children',
+                'record',
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::CONTAINER_OPTION,
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::CONTAINER_COMMON_NAME,
+                'children',
+                static::FIELD_QTY_NONE_TEXT_NAME
+            ],
+            $this->getQtyNoneTextFieldConfig(43)
+        );
+
         return $this->arrays->addDeepValue(
             $meta,
             [
@@ -89,7 +109,7 @@ class CustomOptions
                 'children',
                 static::FIELD_QTY_SYNC_NAME
             ],
-            $this->getQtySyncConfig(43)
+            $this->getQtySyncConfig(44)
         );
     }
 
@@ -126,6 +146,24 @@ class CustomOptions
                         'componentType' => Field::NAME,
                         'formElement'   => Input::NAME,
                         'dataScope'     => static::FIELD_QTY_STEPS_NAME,
+                        'dataType'      => Text::NAME,
+                        'sortOrder'     => $sortOrder
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    protected function getQtyNoneTextFieldConfig(int $sortOrder): array
+    {
+        return [
+            'arguments' => [
+                'data' => [
+                    'config' => [
+                        'label'         => __('None Text'),
+                        'componentType' => Field::NAME,
+                        'formElement'   => Input::NAME,
+                        'dataScope'     => static::FIELD_QTY_NONE_TEXT_NAME,
                         'dataType'      => Text::NAME,
                         'sortOrder'     => $sortOrder
                     ]

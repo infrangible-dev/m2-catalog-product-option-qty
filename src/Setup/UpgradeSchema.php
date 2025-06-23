@@ -48,6 +48,28 @@ class UpgradeSchema implements UpgradeSchemaInterface
             }
         }
 
+        if (version_compare(
+            $context->getVersion(),
+            '1.5.0',
+            '<'
+        )) {
+            if (! $connection->tableColumnExists(
+                $tableName,
+                'qty_none_text'
+            )) {
+                $connection->addColumn(
+                    $tableName,
+                    'qty_none_text',
+                    [
+                        'type'     => Table::TYPE_TEXT,
+                        'length'   => 255,
+                        'nullable' => true,
+                        'comment'  => 'Qty None Text'
+                    ]
+                );
+            }
+        }
+
         $setup->endSetup();
     }
 }
