@@ -23,94 +23,100 @@ define([
 
         _init: function initProductOptionsQty() {
             var self = this;
-            var qtyNode = $('#product_addtocart_form .box-tocart .field.qty #qty');
 
             domReady(function() {
-                $.each(self.options.options, function(optionId, qtyData) {
-                    var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
+                self.initialElement($(self.element));
+            });
+        },
 
-                    if (control.length > 0) {
-                        var qtyField = $('<div>', {class: 'field qty'});
-                        control.prepend(qtyField);
+        initialElement: function(element) {
+            var self = this;
+            var qtyNode = $('#product_addtocart_form .box-tocart .field.qty #qty');
 
-                        var label = $('<label>', {class: 'label', for: 'qty'});
-                        qtyField.append(label);
+            $.each(self.options.options, function(optionId, qtyData) {
+                var control = element.find('div[data-option-id="' + optionId + '"] > div.field > div.control');
 
-                        var labelLabel = $('<span>');
-                        labelLabel.html($.mage.__('Qty'));
-                        label.append(labelLabel);
+                if (control.length > 0) {
+                    var qtyField = $('<div>', {class: 'field qty'});
+                    control.prepend(qtyField);
 
-                        var qtyControl = $('<div>', {class: 'control'});
-                        qtyField.append(qtyControl);
+                    var label = $('<label>', {class: 'label', for: 'qty'});
+                    qtyField.append(label);
 
-                        if (qtyData.input) {
-                            var qtyInput = $('<input>', {
-                                type: 'number',
-                                name: 'options_qty[' + optionId + ']',
-                                id: 'options_qty_' + optionId,
-                                class: 'input-text qty product-option-qty',
-                                value: qtyData.input,
-                                title: $.mage.__('Qty'),
-                                min: 1,
-                                'data-validate': '{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;maxAllowed&quot;:10000}}',
-                                'data-sync': true
-                            });
-                            qtyControl.append(qtyInput);
+                    var labelLabel = $('<span>');
+                    labelLabel.html($.mage.__('Qty'));
+                    label.append(labelLabel);
 
-                            qtyInput.bind('keyup mouseup sync', function() {
-                                $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
-                            });
+                    var qtyControl = $('<div>', {class: 'control'});
+                    qtyField.append(qtyControl);
 
-                            qtyInput.bind('keyup mouseup', function() {
-                                qtyInput.data('sync', false);
-                            });
-
-                            if (qtyData.sync) {
-                                qtyNode.on('input', function() {
-                                    self.syncQtyInput($(this), qtyInput);
-                                });
-                                self.syncQtyInput(qtyNode, qtyInput);
-                            }
-                        } else if (qtyData.steps) {
-                            var qtySelect = $('<select>', {
-                                name: 'options_qty[' + optionId + ']',
-                                id: 'options_qty_' + optionId,
-                                class: 'admin__control-select product-option-qty',
-                                title: $.mage.__('Qty'),
-                                'data-sync': true
-                            });
-                            qtyControl.append(qtySelect);
-
-                            $.each(qtyData.steps, function(key, step) {
-                                var option = $('<option>', {
-                                    value: step.value,
-                                    title: step.label
-                                });
-                                option.html(step.label);
-                                qtySelect.append(option);
-                            });
-
-                            qtySelect.bind('change sync', function() {
-                                $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
-                            });
-
-                            qtySelect.bind('change', function() {
-                                qtySelect.data('sync', false);
-                            });
-
-                            if (qtyData.sync) {
-                                self.syncQtySelect(qtyNode, qtySelect);
-                                qtyNode.on('input', function() {
-                                    self.syncQtySelect($(this), qtySelect);
-                                });
-                            }
-                        }
-
-                        control.find('select.product-custom-option, input.product-custom-option').each(function() {
-                            $(this).attr('data-role', 'qty');
+                    if (qtyData.input) {
+                        var qtyInput = $('<input>', {
+                            type: 'number',
+                            name: 'options_qty[' + optionId + ']',
+                            id: 'options_qty_' + optionId,
+                            class: 'input-text qty product-option-qty',
+                            value: qtyData.input,
+                            title: $.mage.__('Qty'),
+                            min: 1,
+                            'data-validate': '{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;maxAllowed&quot;:10000}}',
+                            'data-sync': true
                         });
-                   }
-                });
+                        qtyControl.append(qtyInput);
+
+                        qtyInput.bind('keyup mouseup sync', function() {
+                            $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
+                        });
+
+                        qtyInput.bind('keyup mouseup', function() {
+                            qtyInput.data('sync', false);
+                        });
+
+                        if (qtyData.sync) {
+                            qtyNode.on('input', function() {
+                                self.syncQtyInput($(this), qtyInput);
+                            });
+                            self.syncQtyInput(qtyNode, qtyInput);
+                        }
+                    } else if (qtyData.steps) {
+                        var qtySelect = $('<select>', {
+                            name: 'options_qty[' + optionId + ']',
+                            id: 'options_qty_' + optionId,
+                            class: 'admin__control-select product-option-qty',
+                            title: $.mage.__('Qty'),
+                            'data-sync': true
+                        });
+                        qtyControl.append(qtySelect);
+
+                        $.each(qtyData.steps, function(key, step) {
+                            var option = $('<option>', {
+                                value: step.value,
+                                title: step.label
+                            });
+                            option.html(step.label);
+                            qtySelect.append(option);
+                        });
+
+                        qtySelect.bind('change sync', function() {
+                            $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
+                        });
+
+                        qtySelect.bind('change', function() {
+                            qtySelect.data('sync', false);
+                        });
+
+                        if (qtyData.sync) {
+                            self.syncQtySelect(qtyNode, qtySelect);
+                            qtyNode.on('input', function() {
+                                self.syncQtySelect($(this), qtySelect);
+                            });
+                        }
+                    }
+
+                    control.find('select.product-custom-option, input.product-custom-option').each(function() {
+                        $(this).attr('data-role', 'qty');
+                    });
+                }
             });
         },
 
