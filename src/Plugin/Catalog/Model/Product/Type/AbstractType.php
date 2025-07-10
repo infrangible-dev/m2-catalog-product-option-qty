@@ -126,7 +126,15 @@ class AbstractType
                 )) {
                     $optionId = $option[ 'option_id' ];
 
-                    $optionQty = $product->getCustomOption(
+                    $parentItemProduct = $product->getData('parent_item_product');
+
+                    if ($parentItemProduct) {
+                        $optionProduct = $parentItemProduct;
+                    } else {
+                        $optionProduct = $product;
+                    }
+
+                    $optionQty = $optionProduct->getCustomOption(
                         sprintf(
                             '%s%s_qty',
                             $subject::OPTION_PREFIX,
