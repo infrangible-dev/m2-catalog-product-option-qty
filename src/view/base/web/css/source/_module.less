@@ -32,8 +32,25 @@
                             }
 
                             select.product-option-qty {
+                                .lib-form-element-input(@_type: select);
                                 width: 100px;
-                                padding-right: 20px;
+                            }
+
+                            > .select2-container {
+                                width: 120%;
+
+                                > .selection {
+                                    > .select2-selection {
+                                        > .select2-selection__rendered {
+                                            text-align: center;
+                                            padding-right: 8px;
+                                        }
+                                    }
+                                }
+
+                                > .product-option-qty {
+                                    text-align: center;
+                                }
                             }
                         }
                     }

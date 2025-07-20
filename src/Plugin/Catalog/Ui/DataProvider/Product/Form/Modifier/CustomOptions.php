@@ -25,6 +25,8 @@ class CustomOptions
 
     public const FIELD_QTY_SYNC_NAME = 'qty_sync';
 
+    public const FIELD_QTY_SYNC_SELECT2 = 'qty_select2';
+
     /** @var Arrays */
     protected $arrays;
 
@@ -94,7 +96,7 @@ class CustomOptions
             $this->getQtyNoneTextFieldConfig(43)
         );
 
-        return $this->arrays->addDeepValue(
+        $meta = $this->arrays->addDeepValue(
             $meta,
             [
                 \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::GROUP_CUSTOM_OPTIONS_NAME,
@@ -110,6 +112,24 @@ class CustomOptions
                 static::FIELD_QTY_SYNC_NAME
             ],
             $this->getQtySyncConfig(44)
+        );
+
+        return $this->arrays->addDeepValue(
+            $meta,
+            [
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::GROUP_CUSTOM_OPTIONS_NAME,
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::GRID_OPTIONS_NAME,
+                'children',
+                'record',
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::CONTAINER_OPTION,
+                'children',
+                \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions::CONTAINER_COMMON_NAME,
+                'children',
+                static::FIELD_QTY_SYNC_SELECT2
+            ],
+            $this->getQtySelect2Config(45)
         );
     }
 
@@ -182,6 +202,29 @@ class CustomOptions
                         'componentType' => Field::NAME,
                         'formElement'   => Checkbox::NAME,
                         'dataScope'     => static::FIELD_QTY_SYNC_NAME,
+                        'dataType'      => Text::NAME,
+                        'sortOrder'     => $sortOrder,
+                        'value'         => '0',
+                        'valueMap'      => [
+                            'true'  => '1',
+                            'false' => '0'
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    protected function getQtySelect2Config(int $sortOrder): array
+    {
+        return [
+            'arguments' => [
+                'data' => [
+                    'config' => [
+                        'label'         => __('Qty Select2'),
+                        'componentType' => Field::NAME,
+                        'formElement'   => Checkbox::NAME,
+                        'dataScope'     => static::FIELD_QTY_SYNC_SELECT2,
                         'dataType'      => Text::NAME,
                         'sortOrder'     => $sortOrder,
                         'value'         => '0',

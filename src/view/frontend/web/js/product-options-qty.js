@@ -7,7 +7,8 @@
 define([
     'jquery',
     'domReady',
-    'mage/translate'
+    'mage/translate',
+    'Infrangible_Select2/js/select2'
 ], function ($, domReady) {
     'use strict';
 
@@ -111,6 +112,14 @@ define([
                                 self.syncQtySelect($(this), qtySelect);
                             });
                         }
+
+                        if (qtyData.select2) {
+                            qtySelect.select2({
+                                dropdownParent: qtySelect.parent(),
+                                dropdownCssClass: 'product-option-qty',
+                                minimumResultsForSearch: Infinity
+                            });
+                        }
                     }
 
                     control.find('select.product-custom-option, input.product-custom-option').each(function() {
@@ -118,6 +127,13 @@ define([
                     });
                 }
             });
+        },
+
+        select2ResultState: function(data, container) {
+            if(data.element) {
+                $(container).addClass($(data.element).attr("class"));
+            }
+            return data.text;
         },
 
         syncQtyInput: function(qty, qtyInput) {
