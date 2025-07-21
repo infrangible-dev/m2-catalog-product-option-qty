@@ -123,6 +123,7 @@ define([
                     }
 
                     control.find('select.product-custom-option, input.product-custom-option').each(function() {
+                        $(this).removeData('role');
                         $(this).attr('data-role', 'qty');
                     });
                 }
