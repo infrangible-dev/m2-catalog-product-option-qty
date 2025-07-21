@@ -45,7 +45,7 @@ class DefaultType
 
             if ($optionQty && $optionQty->getValue() > 1) {
                 $result = sprintf(
-                    '%dx %s',
+                    '%d x %s',
                     $optionQty->getValue(),
                     $result
                 );
