@@ -125,6 +125,10 @@ class Data
             /** @var Option $productOptionData */
             $productOptionData = $item->getProductOption();
 
+            if ($productOptionData === null) {
+                continue;
+            }
+
             /** @var ProductOptionExtension $productOptionDataAttributes */
             $productOptionDataAttributes = $productOptionData->getExtensionAttributes();
 
