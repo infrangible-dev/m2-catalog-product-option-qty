@@ -33,11 +33,11 @@
 
                             select.product-option-qty {
                                 .lib-form-element-input(@_type: select);
-                                width: 100px;
+                                width: 120px;
                             }
 
                             > .select2-container {
-                                width: 120%;
+                                min-width: 120px;
 
                                 > .selection {
                                     > .select2-selection {
@@ -52,6 +52,10 @@
                                     text-align: center;
                                 }
                             }
+                        }
+
+                        .unit-price-hint {
+                            margin-left: 5px;
                         }
                     }
 

@@ -19,7 +19,8 @@ use Magento\Framework\View\TemplateEngine\Php;
     {
         "#product-options-wrapper": {
             "productOptionsQty": {
-                "options": <?= /* @noEscape */ $block->getOptionsConfig(); ?>
+                "options": <?= /* @noEscape */ $block->getOptionsConfig(); ?>,
+                "priceFormat": <?= /* @noEscape */ $block->getPriceFormatJson(); ?>
             }
         }
     }

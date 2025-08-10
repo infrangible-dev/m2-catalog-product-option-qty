@@ -94,6 +94,30 @@ class UpgradeSchema implements UpgradeSchemaInterface
             }
         }
 
+        if (version_compare(
+            $context->getVersion(),
+            '1.10.0',
+            '<'
+        )) {
+            if (! $connection->tableColumnExists(
+                $tableName,
+                'qty_unit'
+            )) {
+                $connection->addColumn(
+                    $tableName,
+                    'qty_unit',
+                    [
+                        'type'     => Table::TYPE_SMALLINT,
+                        'length'   => 5,
+                        'nullable' => true,
+                        'unsigned' => true,
+                        'default'  => 0,
+                        'comment'  => 'Qty Unit'
+                    ]
+                );
+            }
+        }
+
         $setup->endSetup();
     }
 }

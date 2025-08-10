@@ -81,6 +81,7 @@ class Data
 
                 $config[ $option->getId() ][ 'sync' ] = $option->getData('qty_sync') == 1;
                 $config[ $option->getId() ][ 'select2' ] = $option->getData('qty_select2') == 1;
+                $config[ $option->getId() ][ 'unit' ] = $option->getData('qty_unit') == 1;
             }
         }
 

@@ -7,13 +7,15 @@
 define([
     'jquery',
     'domReady',
+    'priceUtils',
     'mage/translate',
     'Infrangible_Select2/js/select2'
-], function ($, domReady) {
+], function ($, domReady, utils) {
     'use strict';
 
     var globalOptions = {
-        options: {}
+        options: {},
+        priceFormat: {}
     };
 
     $.widget('mage.productOptionsQty', {
@@ -39,6 +41,9 @@ define([
 
                 if (control.length > 0) {
                     var qtyField = $('<div>', {class: 'field qty'});
+                    if (qtyData.unit) {
+                        qtyField.addClass('unit');
+                    }
                     control.prepend(qtyField);
 
                     var label = $('<label>', {class: 'label', for: 'qty'});
@@ -117,8 +122,32 @@ define([
                             qtySelect.select2({
                                 dropdownParent: qtySelect.parent(),
                                 dropdownCssClass: 'product-option-qty',
-                                minimumResultsForSearch: Infinity
+                                minimumResultsForSearch: Infinity,
+                                width: 'auto'
                             });
+
+                            if (qtyData.unit) {
+                                qtySelect.on('select2:select', function () {
+                                    var select = $(this);
+                                    var unitPrice = select.attr('data-unit-price');
+
+                                    if (unitPrice) {
+                                        var format = self.options.priceFormat;
+
+                                        var select2 = select.parent().find('.select2-container .selection .select2-selection .select2-selection__rendered');
+                                        var title = select2.attr('title');
+
+                                        if (! isNaN(title)) {
+                                            select2.text(select2.attr('title') +
+                                                ' (' +
+                                                utils.formatPriceLocale(unitPrice, format) +
+                                                ' / ' +
+                                                $.mage.__('Item') +
+                                                ')');
+                                        }
+                                    }
+                                });
+                            }
                         }
                     }
 

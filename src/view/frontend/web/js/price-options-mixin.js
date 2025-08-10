@@ -40,6 +40,7 @@ define([
 
                         var qtyValue = qty.val();
                         var finalPrice = 0;
+                        var unitPrice = 0;
 
                         $.each(self.cache[optionId], function(key, prices) {
                             $.each(prices, function(price, priceData) {
@@ -52,14 +53,15 @@ define([
 
                                 if (price === 'finalPrice') {
                                     finalPrice = finalPrice + priceData.amount;
+                                    unitPrice = unitPrice + priceData.orgAmount;
                                 }
                             });
                         });
 
-                        self.removeOptionPrice(element);
+                        self.removeOptionPrice(optionId);
 
                         if (finalPrice > 0) {
-                            self.addOptionPrice(optionId, finalPrice);
+                            self.addOptionPrice(optionId, finalPrice, unitPrice);
                         }
                     }
 
@@ -67,11 +69,28 @@ define([
                 };
             },
 
-            removeOptionPrice: function removeOptionPrice(element) {
-                $(element).closest('.field-wrapper').find('.product-option-qty-price').remove();
+            removeOptionPrice: function removeOptionPrice(optionId) {
+                var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
+                if (control.length > 0) {
+                    control.find('.product-option-qty-price').remove();
+                    control.find('.unit-price-hint').remove();
+
+                    var qty = control.find('.field.qty.unit');
+                    if (qty.length > 0) {
+                        var select = qty.find('select');
+                        if (select.length > 0) {
+                            var select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
+                            if (select2.length > 0) {
+                                select2.text(select2.attr('title'));
+                            }
+                        }
+                    }
+                }
             },
 
-            addOptionPrice: function addOptionPrice(optionId, finalPrice) {
+            addOptionPrice: function addOptionPrice(optionId, finalPrice, unitPrice) {
+                var self = this;
+
                 var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
                 if (control.length > 0) {
                     var priceField = $('<div>', {class: 'product-option-qty-price'});
@@ -96,6 +115,39 @@ define([
                     });
                     priceFieldPriceValue.html(utils.formatPrice(finalPrice, this.options.priceFormat));
                     priceFieldPriceWrapper.append(priceFieldPriceValue);
+
+                    var qty = control.find('.field.qty.unit');
+                    if (qty.length > 0) {
+                        var config = self.options,
+                            format = config.priceFormat;
+
+                        var addUnitPrice = true;
+
+                        var select = qty.find('select');
+                        if (select.length > 0) {
+                            select.attr('data-unit-price', unitPrice);
+
+                            var select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
+
+                            if (select2.length > 0) {
+                                select2.text(select2.attr('title') +
+                                    ' (' + utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('Item') + ')');
+
+                                addUnitPrice = false;
+                            }
+                        }
+
+                        if (addUnitPrice) {
+                            var unitPriceHint = qty.find('.unit-price-hint');
+
+                            if (unitPriceHint.length === 0) {
+                                unitPriceHint = $('<span>', {class: 'unit-price-hint'});
+                                qty.append(unitPriceHint);
+                            }
+
+                            unitPriceHint.text(utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('Item'));
+                        }
+                    }
                 }
             }
         });
