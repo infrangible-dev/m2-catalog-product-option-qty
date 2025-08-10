@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Infrangible\CatalogProductOptionQty\Block\Product\View\Options;
 
-use FeWeDev\Base\Json;
 use Infrangible\CatalogProductOptionQty\Helper\Data;
 use Infrangible\Core\Helper\Registry;
 use Magento\Catalog\Model\Product;
-use Magento\Framework\Locale\Format;
 use Magento\Framework\View\Element\Template;
 
 /**
@@ -24,12 +22,6 @@ class Qty extends Template
     /** @var Data */
     protected $helper;
 
-    /** @var Json */
-    protected $json;
-
-    /** @var Format */
-    protected $localeFormat;
-
     /** @var Product */
     private $product;
 
@@ -37,8 +29,6 @@ class Qty extends Template
         Template\Context $context,
         Registry $registryHelper,
         Data $helper,
-        Json $json,
-        Format $localeFormat,
         array $data = []
     ) {
         parent::__construct(
@@ -48,8 +38,6 @@ class Qty extends Template
 
         $this->registryHelper = $registryHelper;
         $this->helper = $helper;
-        $this->json = $json;
-        $this->localeFormat = $localeFormat;
     }
 
     public function getProduct(): Product
@@ -72,6 +60,6 @@ class Qty extends Template
 
     public function getPriceFormatJson(): string
     {
-        return $this->json->encode($this->localeFormat->getPriceFormat());
+        return $this->helper->getPriceFormatJson();
     }
 }

@@ -13,6 +13,7 @@ use Magento\Catalog\Api\Data\ProductOptionExtension;
 use Magento\Catalog\Model\CustomOptions\CustomOption;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\Option;
+use Magento\Framework\Locale\Format;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Model\Order\Item;
 
@@ -35,16 +36,21 @@ class Data
     /** @var CustomOptionExtensionFactory */
     protected $customOptionExtensionFactory;
 
+    /** @var Format */
+    protected $localeFormat;
+
     public function __construct(
         Variables $variables,
         Json $json,
         Arrays $arrays,
-        CustomOptionExtensionFactory $customOptionExtensionFactory
+        CustomOptionExtensionFactory $customOptionExtensionFactory,
+        Format $localeFormat
     ) {
         $this->variables = $variables;
         $this->json = $json;
         $this->arrays = $arrays;
         $this->customOptionExtensionFactory = $customOptionExtensionFactory;
+        $this->localeFormat = $localeFormat;
     }
 
     public function getOptionsConfig(Product $product): string
@@ -156,5 +162,10 @@ class Data
                 }
             }
         }
+    }
+
+    public function getPriceFormatJson(): string
+    {
+        return $this->json->encode($this->localeFormat->getPriceFormat());
     }
 }
