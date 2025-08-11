@@ -142,7 +142,7 @@ define([
                                                 ' (' +
                                                 utils.formatPriceLocale(unitPrice, format) +
                                                 ' / ' +
-                                                $.mage.__('Item') +
+                                                $.mage.__('QtyItem') +
                                                 ')');
                                         }
                                     }

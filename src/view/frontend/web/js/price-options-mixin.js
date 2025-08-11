@@ -131,7 +131,7 @@ define([
 
                             if (select2.length > 0) {
                                 select2.text(select2.attr('title') +
-                                    ' (' + utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('Item') + ')');
+                                    ' (' + utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('QtyItem') + ')');
 
                                 addUnitPrice = false;
                             }
@@ -145,7 +145,7 @@ define([
                                 qty.append(unitPriceHint);
                             }
 
-                            unitPriceHint.text(utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('Item'));
+                            unitPriceHint.text(utils.formatPriceLocale(unitPrice, format) + ' / ' + $.mage.__('QtyItem'));
                         }
                     }
                 }
