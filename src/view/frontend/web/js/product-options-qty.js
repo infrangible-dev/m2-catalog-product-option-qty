@@ -107,19 +107,15 @@ define([
                             $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                         });
 
-                        qtySelect.bind('change', function() {
-                            qtySelect.data('sync', false);
+                        qtySelect.bind('change', function(event) {
+                            if (! event.isTrigger) {
+                                qtySelect.data('sync', false);
+                            }
                         });
 
-                        if (qtyData.sync) {
-                            self.syncQtySelect(qtyNode, qtySelect);
-                            qtyNode.on('input', function() {
-                                self.syncQtySelect($(this), qtySelect);
-                            });
-                        }
-
+                        var qtySelect2;
                         if (qtyData.select2) {
-                            qtySelect.select2({
+                            qtySelect2 = qtySelect.select2({
                                 dropdownParent: qtySelect.parent(),
                                 dropdownCssClass: 'product-option-qty',
                                 minimumResultsForSearch: Infinity,
@@ -127,6 +123,10 @@ define([
                             });
 
                             if (qtyData.unit) {
+                                qtySelect.on('select2:selecting', function(event) {
+                                    qtySelect.data('sync', false);
+                                });
+
                                 qtySelect.on('select2:select', function () {
                                     var select = $(this);
                                     var unitPrice = select.attr('data-unit-price');
@@ -148,6 +148,13 @@ define([
                                     }
                                 });
                             }
+                        }
+
+                        if (qtyData.sync) {
+                            self.syncQtySelect(qtyNode, qtySelect, qtySelect2);
+                            qtyNode.on('input', function() {
+                                self.syncQtySelect($(this), qtySelect, qtySelect2);
+                            });
                         }
                     }
 
@@ -175,7 +182,7 @@ define([
             }
         },
 
-        syncQtySelect: function(qty, qtySelect) {
+        syncQtySelect: function(qty, qtySelect, qtySelect2) {
             if (qtySelect.data('sync') === true) {
                 var qtyValue = qty.val();
 
@@ -185,6 +192,11 @@ define([
                         qtySelect.trigger('sync');
                     }
                 });
+
+                if (qtySelect2) {
+                    qtySelect2.val(qtyValue);
+                    qtySelect2.trigger('change');
+                }
             }
         }
     });
