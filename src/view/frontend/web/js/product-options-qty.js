@@ -123,7 +123,7 @@ define([
                             });
 
                             if (qtyData.unit) {
-                                qtySelect.on('select2:selecting', function(event) {
+                                qtySelect.on('select2:selecting', function() {
                                     qtySelect.data('sync', false);
                                 });
 
@@ -200,6 +200,7 @@ define([
                 if (qtySelect2) {
                     qtySelect2.val(qtyValue);
                     qtySelect2.trigger('change');
+                    qtySelect.trigger('select2:select');
                 }
             }
         }
