@@ -183,6 +183,10 @@ define([
         },
 
         syncQtySelect: function(qty, qtySelect, qtySelect2) {
+            if (qty.length === 0) {
+                return;
+            }
+
             if (qtySelect.data('sync') === true) {
                 var qtyValue = qty.val();
 
