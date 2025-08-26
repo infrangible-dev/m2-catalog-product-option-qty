@@ -65,9 +65,9 @@ class Data
                 $optionQtySteps = $option->getData('qty_steps');
 
                 if ($optionQtySteps) {
-                    if (! $option->getIsRequire()) {
-                        $qtyNoneText = $option->getData('qty_none_text');
+                    $qtyNoneText = $option->getData('qty_none_text');
 
+                    if (! $option->getIsRequire() || ! $this->variables->isEmpty($qtyNoneText)) {
                         $qtyNoneText = $this->variables->isEmpty($qtyNoneText) ? 'None' : $qtyNoneText;
 
                         $config[ $option->getId() ][ 'steps' ][] = ['value' => 0, 'label' => __($qtyNoneText)];
@@ -88,6 +88,7 @@ class Data
                 $config[ $option->getId() ][ 'sync' ] = $option->getData('qty_sync') == 1;
                 $config[ $option->getId() ][ 'select2' ] = $option->getData('qty_select2') == 1;
                 $config[ $option->getId() ][ 'unit' ] = $option->getData('qty_unit') == 1;
+                $config[ $option->getId() ][ 'unitPrice' ] = $option->getPrice();
             }
         }
 

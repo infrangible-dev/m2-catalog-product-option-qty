@@ -70,7 +70,10 @@ define([
                         });
                         qtyControl.append(qtyInput);
 
+                        self.updateControl(qtyInput);
+
                         qtyInput.bind('keyup mouseup sync', function() {
+                            self.updateControl($(this));
                             $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                         });
 
@@ -92,6 +95,9 @@ define([
                             title: $.mage.__('Qty'),
                             'data-sync': true
                         });
+                        if (qtyData.unitPrice !== null) {
+                            qtySelect.attr('data-unit-price', qtyData.unitPrice);
+                        }
                         qtyControl.append(qtySelect);
 
                         $.each(qtyData.steps, function(key, step) {
@@ -103,7 +109,10 @@ define([
                             qtySelect.append(option);
                         });
 
+                        self.updateControl(qtySelect);
+
                         qtySelect.bind('change sync', function() {
+                            self.updateControl($(this));
                             $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                         });
 
@@ -203,6 +212,19 @@ define([
                     qtySelect.trigger('select2:select');
                 }
             }
+        },
+
+        updateControl: function(qtyInput) {
+            var qtyValue = qtyInput.val();
+            var control = qtyInput.closest('.field-wrapper').find('>.field >.control');
+            if (qtyValue > 0) {
+                control.addClass('has-qty');
+                control.removeClass('no-qty');
+            } else {
+                control.addClass('no-qty');
+                control.removeClass('has-qty');
+            }
+
         }
     });
 

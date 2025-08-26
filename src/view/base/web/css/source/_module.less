@@ -9,6 +9,13 @@
         .fieldset {
             .field {
                 > .control {
+                    &.no-qty {
+                        >*:not(.field.qty) {
+                            opacity: .35;
+                            pointer-events: none
+                        }
+                    }
+
                     .field.qty {
                         display: table;
                         margin-bottom: 5px;
