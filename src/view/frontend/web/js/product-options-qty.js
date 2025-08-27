@@ -66,13 +66,18 @@ define([
                             title: $.mage.__('Qty'),
                             min: 1,
                             'data-validate': '{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;maxAllowed&quot;:10000}}',
-                            'data-sync': true
+                            'data-sync': true,
+                            'data-init': false
                         });
                         qtyControl.append(qtyInput);
 
                         self.updateControl(qtyInput);
 
                         qtyInput.bind('keyup mouseup sync', function() {
+                            if (qtyInput.attr('data-init') === 'false') {
+                                control.trigger('catalog-option-qty-init', [qtyInput]);
+                                qtyInput.attr('data-init', 'true');
+                            }
                             self.updateControl($(this));
                             $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                         });
@@ -93,7 +98,8 @@ define([
                             id: 'options_qty_' + optionId,
                             class: 'admin__control-select product-option-qty',
                             title: $.mage.__('Qty'),
-                            'data-sync': true
+                            'data-sync': true,
+                            'data-init': false
                         });
                         if (qtyData.unitPrice !== null) {
                             qtySelect.attr('data-unit-price', qtyData.unitPrice);
@@ -112,6 +118,10 @@ define([
                         self.updateControl(qtySelect);
 
                         qtySelect.bind('change sync', function() {
+                            if (qtySelect.attr('data-init') === 'false') {
+                                control.trigger('catalog-option-qty-init', [qtySelect]);
+                                qtySelect.attr('data-init', 'true');
+                            }
                             self.updateControl($(this));
                             $(this).closest('.field-wrapper').find('.product-custom-option').trigger('change');
                         });

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!--
+ * @author      Andreas Knollmann
+ * @copyright   Copyright (c) 2014-2025 Softwareentwicklung Andreas Knollmann
+ * @license     http://www.opensource.org/licenses/mit-license.php MIT
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_option_product_init_attribute_mappings">
+        <observer name="infrangible_catalogproductoptionqty" instance="Infrangible\CatalogProductOptionQty\Observer\CatalogProductOptionProductInitAttributeMappings"/>
+    </event>
+    <event name="catalog_product_option_product_init_attribute_preselects">
+        <observer name="infrangible_catalogproductoptionqty" instance="Infrangible\CatalogProductOptionQty\Observer\CatalogProductOptionProductInitAttributePreselects"/>
+    </event>
+</config>
