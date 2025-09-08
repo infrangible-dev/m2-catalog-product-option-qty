@@ -15,8 +15,8 @@ class DefaultType
 {
     public function afterGetOptionPrice(
         \Magento\Catalog\Model\Product\Option\Type\DefaultType $subject,
-        float $result
-    ): float {
+        float|null $result
+    ): float|null {
         /** @var Option $itemOption */
         $itemOption = $subject->getData('configuration_item_option');
 
