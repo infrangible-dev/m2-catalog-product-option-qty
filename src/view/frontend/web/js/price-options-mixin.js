@@ -22,13 +22,13 @@ define([
             },
 
             getQtyHandler: function getQtyHandler() {
-                var self = this;
+                const self = this;
 
                 return function (element, optionConfig) {
-                    var changes = self.getOptionValue(element, optionConfig);
+                    const changes = self.getOptionValue(element, optionConfig);
 
-                    var optionId = utils.findOptionId(element[0]);
-                    var qty = $('#options_qty_' + optionId);
+                    const optionId = utils.findOptionId(element[0]);
+                    const qty = $('#options_qty_' + optionId);
 
                     if (qty.length > 0) {
                         $.each(changes, function(key, prices) {
@@ -38,9 +38,9 @@ define([
                             self.cache[optionId][key] = prices;
                         });
 
-                        var qtyValue = qty.val();
-                        var finalPrice = 0;
-                        var unitPrice = 0;
+                        const qtyValue = qty.val();
+                        let finalPrice = 0;
+                        let unitPrice = 0;
 
                         $.each(self.cache[optionId], function(key, prices) {
                             $.each(prices, function(price, priceData) {
@@ -70,16 +70,16 @@ define([
             },
 
             removeOptionPrice: function removeOptionPrice(optionId) {
-                var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
+                const control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
                 if (control.length > 0) {
                     control.find('.product-option-qty-price').remove();
                     control.find('.unit-price-hint').remove();
 
-                    var qty = control.find('.field.qty.unit');
+                    const qty = control.find('.field.qty.unit');
                     if (qty.length > 0) {
-                        var select = qty.find('select');
+                        const select = qty.find('select');
                         if (select.length > 0) {
-                            var select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
+                            const select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
                             if (select2.length > 0) {
                                 select2.text(select2.attr('title'));
                             }
@@ -89,45 +89,45 @@ define([
             },
 
             addOptionPrice: function addOptionPrice(optionId, finalPrice, unitPrice) {
-                var self = this;
+                const self = this;
 
-                var control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
+                const control = $('div[data-option-id="' + optionId + '"] > div.field > div.control');
                 if (control.length > 0) {
-                    var priceField = $('<div>', {class: 'product-option-qty-price'});
+                    const priceField = $('<div>', {class: 'product-option-qty-price'});
                     control.append(priceField);
 
-                    var priceFieldLabel = $('<label>', {class: 'label'});
+                    const priceFieldLabel = $('<label>', {class: 'label'});
                     priceFieldLabel.html($.mage.__('Your selection'));
                     priceField.append(priceFieldLabel);
 
-                    var priceFieldPriceContainer = $('<span>', {
+                    const priceFieldPriceContainer = $('<span>', {
                         class: 'price-container price-option_price'
                     });
                     priceField.append(priceFieldPriceContainer);
 
-                    var priceFieldPriceWrapper = $('<span>', {
+                    const priceFieldPriceWrapper = $('<span>', {
                         class: 'price-wrapper'
                     });
                     priceFieldPriceContainer.append(priceFieldPriceWrapper);
 
-                    var priceFieldPriceValue = $('<span>', {
+                    const priceFieldPriceValue = $('<span>', {
                         class: 'price'
                     });
                     priceFieldPriceValue.html(utils.formatPrice(finalPrice, this.options.priceFormat));
                     priceFieldPriceWrapper.append(priceFieldPriceValue);
 
-                    var qty = control.find('.field.qty.unit');
+                    const qty = control.find('.field.qty.unit');
                     if (qty.length > 0) {
-                        var config = self.options,
+                        const config = self.options,
                             format = config.priceFormat;
 
-                        var addUnitPrice = true;
+                        let addUnitPrice = true;
 
-                        var select = qty.find('select');
+                        const select = qty.find('select');
                         if (select.length > 0) {
                             select.attr('data-unit-price', unitPrice);
 
-                            var select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
+                            const select2 = qty.find('.select2-container .selection .select2-selection .select2-selection__rendered');
 
                             if (select2.length > 0) {
                                 select2.text(select2.attr('title') +
@@ -138,7 +138,7 @@ define([
                         }
 
                         if (addUnitPrice) {
-                            var unitPriceHint = qty.find('.unit-price-hint');
+                            let unitPriceHint = qty.find('.unit-price-hint');
 
                             if (unitPriceHint.length === 0) {
                                 unitPriceHint = $('<span>', {class: 'unit-price-hint'});
